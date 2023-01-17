@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.images{
+  position: relative;
+  display: flex;
+  height: 400px;
+}
+
+.album{
+  height: 400px;
+  width: 400px;
+  overflow: hidden;
+}

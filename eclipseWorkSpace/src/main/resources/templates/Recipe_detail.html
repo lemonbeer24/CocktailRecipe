@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Insert title here</title>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+	
+<link href="css/cocktail_ImageView.css" rel="stylesheet">
+</head>
+
+<body>
+
+<article>
+	<div class="album">
+		<div class="images">
+			<div class="image" th:each="imgpath : ${recipe.drinkImgsPath}">
+				<img th:src="${'images/' + imgpath}" width='400' height='400'>
+			</div>
+		</div>
+	</div>
+	
+	<button id="prev">PREV</button>
+    <button id="next">NEXT</button> 
+    
+    <script src="js/cocktail_ImageView.js"></script>
+
+	<h1 th:text="${recipe.drinkName}"></h1>
+	
+	<h3>재료</h3>
+	<ul th:each="material : ${materials}">
+		<li><a th:text="${material.MaterialName}"></a> <a th:text="${material.volume}"></a>
+	</ul>
+	
+	<h3>특이사항</h3>
+	<ul th:each="note : ${notes}">
+		<li><a th:text="${note}"></a>
+	</ul>
+	
+	<h3>믹스 과정</h3>
+	<ul th:each="Procedure : ${procedures}">
+		<li><a th:text="${Procedure.Procedure}"></a>
+		<li><img th:if="${Procedure.guideImgPath} != null" 
+		th:src = "'images/' + ${Procedure.guideImgPath}" width='300' height='300'>
+	</ul>
+</article>
+
+<form method="post" id="modfrm">
+	<input type="hidden" th:field="${recipe.id}">
+	<label>id : </label>
+	<input type="text" name="userid" id="userid" required>
+	<label>pw : </label>
+	<input type="password" name="userpw" id="userpw" required><br>
+	
+	<input type="button" id="updatebtn" value="수정">
+	<input type="button" id="delbtn" value="삭제">
+</form>
+
+<script th:inline="javascript">
+	function submitcall(event)
+	{
+		if(event.target.getAttribute('id') == "updatebtn")
+		{
+			document.getElementById('modfrm').setAttribute('action','/RecipeUpdateForm')
+			document.getElementById('modfrm').submit();
+		}
+		
+		if(event.target.getAttribute('id') == "delbtn")
+		{
+			document.getElementById('modfrm').setAttribute('action','/RecipeDelete')
+			document.getElementById('modfrm').submit();
+		}
+	}
+
+	window.onload = function()
+	{
+		document.getElementById("updatebtn").onclick = submitcall;
+		document.getElementById("delbtn").onclick = submitcall;
+	}
+</script>
+
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+
+</body>
+</html>

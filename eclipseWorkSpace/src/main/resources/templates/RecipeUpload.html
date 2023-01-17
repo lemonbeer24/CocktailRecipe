@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<th:block layout:fragment='css'>
+		<style>
+		.cockimginput .upload-name {
+			display: inline-block;
+			height: 40px;
+			padding: 0 10px;
+			vertical-align: middle;
+			border: 1px solid #dddddd;
+			width: 40%;
+			color: #999999;
+		}	
+		
+		.cockimginput label {
+    		display: inline-block;
+    		padding: 10px 20px;
+    		color: #fff;
+    		vertical-align: middle;
+    		background-color: #999999;
+    		cursor: pointer;
+    		height: 20px;
+    		margin-left: 10px;
+		}
+		
+		.cockimginput input[type="file"] {
+    		position: absolute;
+    		width: 0;
+    		height: 0;
+    		padding: 0;
+    		overflow: hidden;
+   			border: 0;
+		}
+		
+		.Miximginput .upload-name {
+			display: inline-block;
+			height: 40px;
+			padding: 0 10px;
+			vertical-align: middle;
+			border: 1px solid #dddddd;
+			width: 40%;
+			color: #999999;
+		}	
+		
+		.Miximginput label {
+    		display: inline-block;
+    		padding: 10px 20px;
+    		color: #fff;
+    		vertical-align: middle;
+    		background-color: #999999;
+    		cursor: pointer;
+    		height: 20px;
+    		margin-left: 10px;
+		}
+		
+		.Miximginput input[type="file"] {
+    		position: absolute;
+    		width: 0;
+    		height: 0;
+    		padding: 0;
+    		overflow: hidden;
+   			border: 0;
+		}
+	</style>
+</th:block>
+
+<form th:action="${selecturl}" method="post" 
+	enctype="multipart/form-data" th:object="${recipeDto}" id="frm">
+	
+	<script th:inline="javascript">
+		const dto = [[${recipeDto}]];
+	</script>
+	
+	<input type="hidden" th:field="*{id}">
+   
+	<label>칵테일 이름 : </label>
+	<input type="text" th:field="*{cocktailName}" required><br><br>
+    
+    <label>칵테일 이미지(복수 선택 가능) : </label>
+    
+    <div id="cockImgs">
+    
+    </div>
+    
+    <br>
+    <button type="button" id="addcockImgBtn">이미지 추가..</button>
+    <br>
+    
+    <div id="materials">
+    	
+    </div>
+    <button type="button" id="Addmater">재료 추가..</button><br><br>
+    
+    <label>특이사항 : </label><br>
+    <div id="notes">
+    	
+    </div>
+    <button type="button" id="Addnote">특이사항 추가..</button><br><br>
+    
+    <div id="Mixprocess">
+    </div>
+    <button type="button" id="AddMix">믹스 과정 추가..</button><br><br>
+    
+    <div th:if="${selecturl == '/RecipeUpload'}">
+    	<label>id : </label>
+		<input type="text" th:field="*{userid}" required>
+		<label> pw : </label>
+		<input type="password" th:field="*{userpw}" required><br>
+    </div>
+    <div class="button">
+        <input type="button" id="submitbtn" value="레시피 업로드">
+    </div>
+    
+    <!-- 데이터를 받기 위해 만들어야할 html 배열들
+    materialnames : 재료 이름들,
+    volumes : 재료 용량들,
+    <button type="submit">레시피 업로드</button>
+      -->
+</form>
+
+<script src="js/RecipeUploadsc.js" th:inline="javascript"></script>
+<script src="js/RecipeUpdate.js" th:inline="javascript"></script>
+
+</body>
+</html>
