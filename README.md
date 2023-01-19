@@ -24,6 +24,8 @@ java -jar -Dsqlusername=유저이름 -Dsqlpassword=페스워드 -Dsqlport=sql서
 Java version : JavaSE - 18 <br>
 Build Tool : gradle 7.5 <br>
 RDBMS : MYsql 5.7 <br>
+spring boot version : 2.7.2<br>
+dependency management version : 1.0.12.RELEASE <br>
 
 의존성 : <br>
 spring-boot-starter-jdbc<br>
