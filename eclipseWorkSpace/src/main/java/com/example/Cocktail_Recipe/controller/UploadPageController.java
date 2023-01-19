@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.Cocktail_Recipe.domain.ImageStatus;
-import com.example.Cocktail_Recipe.domain.Recipe;
+import com.example.Cocktail_Recipe.domain.Recipedummy;
 import com.example.Cocktail_Recipe.domain.Recipe_Material;
 import com.example.Cocktail_Recipe.domain.Recipe_Procedure;
 import com.example.Cocktail_Recipe.domain.Recipe_detail;
@@ -163,7 +163,7 @@ public class UploadPageController {
 		//모든 데이터 는 그냥 덮어쓰기 하면됨, but 그 전에 파일 시스템에 있는 이미지와
 		//dto 로 넘어온 이미지를 비교하여 저장하거나 원래 이미지를 삭제하는 작업이 필요.
 		
-		Recipe recipe = recipeService.FindRecipeToId(Dto.getId());
+		Recipedummy recipe = recipeService.FindRecipeToId(Dto.getId());
 		RecipeDto olddto = RecipeDto.of(recipe);
 		
 		log.info("================ cock image update ================");

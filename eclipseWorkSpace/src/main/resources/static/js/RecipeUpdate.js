@@ -11,8 +11,9 @@ function init() {
 		//재료 업데이트 input 생성
 		var matername = Recipedata.materialnames;
 		var matervol = Recipedata.volumes;
+		var materunit = Recipedata.units;
 		for (var i in matername) {
-			createMater(matername[i], matervol[i]);
+			createMater(matername[i], matervol[i], materunit[i]);
 		}
 		
 		//칵테일 이미지 업데이트 input 생성

@@ -28,6 +28,7 @@ public class RecipeJsonService {
 
 		ArrayList<String> mnames = dto.getMaterialnames();
 		ArrayList<String> vols = dto.getVolumes();
+		ArrayList<String> units = dto.getUnits();
 
 		ArrayList<MixprocessDto> Mixprocess = (ArrayList<MixprocessDto>) dto.getMixprocessList();
 
@@ -40,6 +41,7 @@ public class RecipeJsonService {
 				Recipe_Material material = new Recipe_Material();
 				material.setMaterialName(mnames.get(i));
 				material.setVolume(Integer.parseInt(vols.get(i)));
+				material.setUnit(units.get(i));
 				materials.add(material);
 			}
 		}

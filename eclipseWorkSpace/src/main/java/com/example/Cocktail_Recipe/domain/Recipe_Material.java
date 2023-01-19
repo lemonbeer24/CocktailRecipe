@@ -9,6 +9,7 @@ public class Recipe_Material {
 
 	private String MaterialName;
 	private int volume;
+	private String unit;
 	
 	/*
 	public String getMaterialName() {

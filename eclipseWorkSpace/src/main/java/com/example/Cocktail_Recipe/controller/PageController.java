@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
 
 import com.example.Cocktail_Recipe.domain.FileDto;
-import com.example.Cocktail_Recipe.domain.Recipe;
+import com.example.Cocktail_Recipe.domain.Recipedummy;
 import com.example.Cocktail_Recipe.domain.Recipe_Material;
 import com.example.Cocktail_Recipe.domain.Recipe_Procedure;
 import com.example.Cocktail_Recipe.domain.Recipe_detail;
@@ -48,8 +48,8 @@ public class PageController {
 	private final RecipeService recipeService;
 	private final ImageService imageService;
 	
-	@Value("${spring.servlet.multipart.location}")
-	String filePath;
+	//@Value("${spring.servlet.multipart.location}")
+	//String filePath;
 	
 	@Autowired
 	public PageController(RecipeService recipeService, ImageService imageService) 
@@ -61,7 +61,7 @@ public class PageController {
 	@GetMapping("/")
 	public String MainPageCont(Model model) 
 	{
-		List<List<Recipe>> tableRecipes = recipeService.FindRecipesTableFormat();
+		List<List<Recipedummy>> tableRecipes = recipeService.FindRecipesTableFormat();
 		//List<Recipe> tableRecipes = recipeService.FindRecipes();
 		model.addAttribute("recipes", tableRecipes);
 		return "mainPage.html";
@@ -77,7 +77,7 @@ public class PageController {
 	public String RecipeDetailPage(@RequestParam("name") String RecipeName, @RequestParam("id") long RecipeId, Model model) 
 	{
 		log.info("Recipe! name : " + RecipeName + "id : " + RecipeId);
-		Recipe recipe = recipeService.FindRecipeToIdAndName(RecipeId, RecipeName);
+		Recipedummy recipe = recipeService.FindRecipeToIdAndName(RecipeId, RecipeName);
 		log.info("pathUUID : " + recipe.getDrinkImgDirUUID());
 		model.addAttribute("recipe", recipe);
 		
@@ -101,8 +101,8 @@ public class PageController {
 	@GetMapping("/result")
 	public String uploadResult(Model model) 
 	{
-		List<Recipe> recipes = recipeService.FindRecipes();
-		for (Recipe recipe : recipes) {
+		List<Recipedummy> recipes = recipeService.FindRecipes();
+		for (Recipedummy recipe : recipes) {
 			recipe.setDrinkImgsPath(
 					imageService.GetDrinkImgPath(recipe.getDrinkImgDirUUID()));
 			if(recipe.getDrinkImgsPath().size() > 0) 
@@ -111,7 +111,7 @@ public class PageController {
 			}
 		}
 		
-		for (Recipe recipe : recipes) {
+		for (Recipedummy recipe : recipes) {
 			System.out.println(recipe.getDrinkName());
 			for (String path : recipe.getDrinkImgsPath()) {
 				System.out.println(path);
@@ -126,7 +126,7 @@ public class PageController {
 	@GetMapping("/sqlJsonTest")
 	public String SqlJsonTest() 
 	{
-		Recipe recipe = recipeService.FindRecipeToId(1);
+		Recipedummy recipe = recipeService.FindRecipeToId(1);
 		Recipe_Procedure Pro = recipe.getRecipeDetail().getProcedures().get(0);
 		return Pro.getProcedure();
 	}

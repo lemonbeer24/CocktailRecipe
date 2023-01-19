@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.example.Cocktail_Recipe.domain.Recipe;
+import com.example.Cocktail_Recipe.domain.Recipedummy;
 import com.example.Cocktail_Recipe.domain.Recipe_detail;
 import com.google.gson.Gson;
 
@@ -29,17 +29,17 @@ public class JdbcRecipeRepository implements RecipeRepository {
 	}
 	
 	@Override
-	public Optional<Recipe> findByid(long id)
+	public Optional<Recipedummy> findByid(long id)
 	{
-		List<Recipe> result = jdbcTem.query("select * from recipes where id = ?", RecipeRowMapper(), id);
-		for (Recipe recipe : result) {
+		List<Recipedummy> result = jdbcTem.query("select * from recipes where id = ?", RecipeRowMapper(), id);
+		for (Recipedummy recipe : result) {
 			log.info(recipe.toString());
 		}
 		return result.stream().findAny();
 	}
 	
 	@Override
-	public List<Recipe> findAll() {
+	public List<Recipedummy> findAll() {
 		// TODO Auto-generated method stub
 		return jdbcTem.query("select * from recipes", RecipeRowMapper());
 	}
@@ -50,10 +50,10 @@ public class JdbcRecipeRepository implements RecipeRepository {
 		return detail;
 	}
 	
-	private RowMapper<Recipe> RecipeRowMapper()
+	private RowMapper<Recipedummy> RecipeRowMapper()
 	{
 		return (rs, rowNum) -> {
-			Recipe recipe = new Recipe();
+			Recipedummy recipe = new Recipedummy();
 			recipe.setId(rs.getInt("id"));
 			recipe.setDrinkName(rs.getString("drinkName"));
 			recipe.setDrinkImgDirUUID(rs.getString("drinkImgsDirUUID"));
@@ -63,11 +63,11 @@ public class JdbcRecipeRepository implements RecipeRepository {
 	}
 
 	@Override
-	public Optional<Recipe> findByidAndName(long id, String drinkName) {
+	public Optional<Recipedummy> findByidAndName(long id, String drinkName) {
 		// TODO Auto-generated method stub
-		List<Recipe> result = jdbcTem.query("select * from recipes where id = ? and drinkName = ?"
+		List<Recipedummy> result = jdbcTem.query("select * from recipes where id = ? and drinkName = ?"
 				, RecipeRowMapper(), id, drinkName);
-		for (Recipe recipe : result) {
+		for (Recipedummy recipe : result) {
 			log.info(recipe.toString());
 		}
 		return result.stream().findAny();
@@ -98,7 +98,7 @@ public class JdbcRecipeRepository implements RecipeRepository {
 	@Override
 	public boolean AuthRecipe(long id, String userid, String userpw) {
 		// TODO Auto-generated method stub
-		List<Recipe> result = jdbcTem.query
+		List<Recipedummy> result = jdbcTem.query
 				("select * from recipes where " + 
 				 "id = ? and userid = ? and userpw = ?",
 				  RecipeRowMapper(),id,userid,userpw);

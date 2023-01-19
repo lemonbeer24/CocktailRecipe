@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.Cocktail_Recipe.domain.ImageStatus;
-import com.example.Cocktail_Recipe.domain.Recipe;
+import com.example.Cocktail_Recipe.domain.Recipedummy;
 import com.example.Cocktail_Recipe.domain.Dto.ImageDto;
 import com.example.Cocktail_Recipe.domain.Dto.MixprocessDto;
 import com.example.Cocktail_Recipe.domain.Dto.RecipeDto;

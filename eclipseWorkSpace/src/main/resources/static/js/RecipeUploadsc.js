@@ -13,6 +13,8 @@
  const AddcockImgBtn = document.getElementById("addcockImgBtn");
  const cockImgsDiv = document.getElementById("cockImgs");
  
+ const realsubmitbtn = document.getElementById("realsubmit");
+ 
  var nextMaterId = 0;
  var AddmaterDocsDic = {};
  
@@ -32,9 +34,10 @@
 	createMater()
  }
  
- function createMater(materName,vol)
+ function createMater(materName,vol,unit)
  {
 	var materDiv = document.createElement("div");
+	materDiv.setAttribute("class", "materinput");
 	
 	var namelabel = document.createElement("label");
 	namelabel.innerText = "재료 이름 : ";
@@ -59,6 +62,7 @@
 	var volume = document.createElement("input");
 	volume.setAttribute("type","number");
 	volume.setAttribute("class","volume");
+	volume.setAttribute("min","0");
 	volume.setAttribute("name","volumes[]");
 	volume.setAttribute("required","true");
 	
@@ -67,6 +71,22 @@
 	}
 	
 	materDiv.appendChild(volume);
+	
+	namelabel = document.createElement("label");
+	namelabel.innerText = "단위 : ";
+	materDiv.appendChild(namelabel);
+	
+	var unitinput = document.createElement("input");
+	unitinput.setAttribute("type","text");
+	unitinput.setAttribute("class","unit");
+	unitinput.setAttribute("name","units[]");
+	unitinput.setAttribute('required','true');
+	
+	if(unit) {
+		unitinput.setAttribute("value", unit);
+	}
+	
+	materDiv.appendChild(unitinput);
 	
 	AddDelBtn(materDiv,nextMaterId,"mater");
 	
@@ -108,9 +128,9 @@
 	imagelabel.innerText = "가이드 이미지 : "
 	MixDiv.appendChild(imagelabel);
 	if(imgstatus != undefined && imgname != undefined) {
-		AddImgInput(MixDiv,'Miximginput',imgstatus,imgname);
+		AddImgInput(MixDiv,'Miximginput',imgstatus,imgname,false);
 	} else {
-		AddImgInput(MixDiv,'Miximginput','New');
+		AddImgInput(MixDiv,'Miximginput','New',null,false);
 	}
 	
 	AddDelBtn(MixDiv,nextMixId,"Mix");
@@ -151,14 +171,14 @@
 	nextNoteId++;
  }
  
- function AddImgInput(appendTarget, classstr, status, imgname)
+ function AddImgInput(appendTarget, classstr, status, imgname, isMixinput)
  {
 	var rootDiv = document.createElement("div");
 	rootDiv.setAttribute("class", classstr);
 
 	var uploadNameText = document.createElement("a");
 	uploadNameText.setAttribute("class", "upload-name");
-	if(imgname != undefined){
+	if(imgname){
 		uploadNameText.textContent = imgname;
 	} else {
 		uploadNameText.textContent = "첨부파일 이름....";
@@ -183,28 +203,30 @@
 	
 	var imghidden = document.createElement("input");
 	imghidden.setAttribute("type","hidden");
-	if(imgname != undefined){
+	if(imgname){
 		imghidden.setAttribute("value", imgname);
 	}
 	rootDiv.appendChild(imghidden);
-		
-	var DelBtn = document.createElement("button");
-	DelBtn.setAttribute("type", "button");
-	DelBtn.textContent = "삭제...";
-	DelBtn.addEventListener("click", delimageinput);
-	rootDiv.appendChild(DelBtn);
+	
+	if(isMixinput){	
+		var DelBtn = document.createElement("button");
+		DelBtn.setAttribute("type", "button");
+		DelBtn.textContent = "삭제...";
+		DelBtn.addEventListener("click", delimageinput);
+		rootDiv.appendChild(DelBtn);
+	}
 	
 	appendTarget.appendChild(rootDiv);
  }
  
  function NewAddCockImginput()
  {
-	AddImgInput(cockImgsDiv,'cockimginput','New');
+	AddImgInput(cockImgsDiv,'cockimginput','New',null,true);
  }
  
  function UpdateCockImginput(imgname,status)
  {
-	AddImgInput(cockImgsDiv,'cockimginput',status,imgname);
+	AddImgInput(cockImgsDiv,'cockimginput',status,imgname,true);
  }
  
  function adduploadImage(event)
@@ -338,8 +360,20 @@
  window.onload = function() 
  {
 	document.getElementById('submitbtn').onclick = function(){
+		
+		if(document.getElementsByClassName("materinput").length <= 0){
+			alert("재료는 하나이상 입력하셔야 합니다.");
+			return;
+		}
+		
 		//칵테일 이미지 input name update
 		var selectedItem = document.getElementsByClassName("cockimginput");
+		
+		if(document.getElementsByClassName("cockimginput").length <= 0){
+			alert("칵테일 이미지는 하나이상 입력하셔야 합니다.");
+			return;
+		}
+		
 		for(var i = 0; i < selectedItem.length; i++)
 		{
 			var nameStr = "cocktailImages[" + i + "].file";
@@ -356,6 +390,12 @@
 		}
 	
 		selectedItem = document.getElementsByClassName("Mixinput");
+		
+		if(selectedItem.length <= 0){
+			alert("믹스 과정은 하나 이상 입력하셔야 합니다");
+			return;
+		}
+		
 		for(var i = 0; i < selectedItem.length; i++)
 		{
 			console.log(selectedItem[i].childNodes[2]);
@@ -377,7 +417,9 @@
 			selectedItem[i].childNodes[5].childNodes[3]
 				.setAttribute("name", nameStr);
 		}
-		document.getElementById('frm').submit();
+		
+		realsubmitbtn.click();
+		//document.getElementById('frm').submit();
 	}
  }
  

@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.Cocktail_Recipe.domain.ImageStatus;
-import com.example.Cocktail_Recipe.domain.Recipe;
+import com.example.Cocktail_Recipe.domain.Recipedummy;
 import com.example.Cocktail_Recipe.domain.Recipe_Material;
 import com.example.Cocktail_Recipe.domain.Recipe_Procedure;
 import com.example.Cocktail_Recipe.domain.Recipe_detail;
@@ -30,12 +30,13 @@ public class RecipeDto {
 	
 	private ArrayList<String> materialnames;
 	private ArrayList<String> volumes;
+	private ArrayList<String> units;
 	
 	private ArrayList<String> notes;
 	
 	private List<MixprocessDto> MixprocessList;
 	
-	public static RecipeDto of(Recipe recipe) 
+	public static RecipeDto of(Recipedummy recipe) 
 	{
 		//recipe 에서 dto 로 변환하는 것은 테이블 에서 데이터를 
 		//가져 오는 것 을 전제로 한다.
@@ -63,13 +64,17 @@ public class RecipeDto {
 		ArrayList<Recipe_Material> materials = detail.getMaterials();
 		ArrayList<String> materialnames = new ArrayList<>();
 		ArrayList<String> volumes = new ArrayList<>();
+		ArrayList<String> units = new ArrayList<>();
+		
 		for(Recipe_Material Material : materials) 
 		{
 			materialnames.add(Material.getMaterialName());
 			volumes.add(Integer.toString(Material.getVolume()));
+			units.add(Material.getUnit());
 		}
 		dto.setMaterialnames(materialnames);
 		dto.setVolumes(volumes);
+		dto.setUnits(units);
 		
 		ArrayList<Recipe_Procedure> procedures = detail.getProcedures();
 		ArrayList<MixprocessDto> mixprocessDtos = new ArrayList<>();
