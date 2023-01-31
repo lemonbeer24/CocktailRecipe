@@ -1,5 +1,4 @@
 # 칵테일 사이트
-### 2022 인하공전 3학년 2학기 스프링 부트 텀 프로젝트
 ![image](https://user-images.githubusercontent.com/53043464/213490030-07f06632-0589-4873-b926-fe9d49477fdb.png)
 
 ## 프로젝트 개요
